@@ -1,0 +1,33 @@
+{
+  "name": "smart-step-website",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:backend": "cd backend && php artisan serve",
+    "dev:full": "concurrently -n \"frontend,backend\" -c \"cyan,magenta\" \"npm run dev\" \"npm run dev:backend\"",
+    "build": "vite build",
+    "preview": "vite preview",
+    "backend:migrate": "cd backend && php artisan migrate",
+    "backend:seed": "cd backend && php artisan db:seed",
+    "backend:fresh": "cd backend && php artisan migrate:fresh --seed"
+  },
+  "dependencies": {
+    "@google/genai": "^1.29.0",
+    "@jest/globals": "^30.2.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-quill": "^2.0.0",
+    "react-router-dom": "^7.9.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "concurrently": "^9.2.1",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
+  }
+}

@@ -1,0 +1,69 @@
+/* Global theme tweaks for improved contrast and dark mode legibility */
+:root {
+  --bg-body: #f8fafc;
+  --bg-surface: #ffffff;
+  --text-primary: #0f172a;
+  --text-muted: #334155;
+  --accent: #21409a;
+  --accent-contrast: #0b1022;
+
+  --bg-body-dark: #09090b;
+  --bg-surface-dark: #121217;
+  --text-primary-dark: #f4f4f5;
+  --text-muted-dark: #a1a1aa;
+  --accent-dark: #60a5fa;
+  --accent-contrast-dark: #09090b;
+}
+
+body {
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  font-family: var(--font-family-sans, 'Montserrat', sans-serif);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+html.dark body {
+  background-color: var(--bg-body-dark);
+  color: var(--text-primary-dark);
+}
+
+/* Ensure text stays legible in dark mode even when utility classes set lighter grays */
+html.dark .text-gray-600 { color: var(--text-muted-dark) !important; }
+html.dark .text-gray-700 { color: var(--text-primary-dark) !important; }
+html.dark .text-gray-800 { color: #f4f4f5 !important; }
+html.dark .text-gray-900 { color: #ffffff !important; }
+
+/* Surface overrides to keep contrast on light backgrounds used in components */
+html.dark .bg-white,
+html.dark .bg-gray-50,
+html.dark .bg-gray-100 { background-color: var(--bg-surface-dark) !important; }
+
+/* Link visibility - more specific to avoid breaking button text */
+a:not(.bg-smart-green):not(.bg-smart-blue):not(.bg-red-500) { color: var(--accent); }
+html.dark a:not(.bg-smart-green):not(.bg-smart-blue):not(.bg-red-500) { color: var(--accent-dark); }
+a:hover:not(.bg-smart-green):not(.bg-smart-blue):not(.bg-red-500) { color: #163072; }
+html.dark a:hover:not(.bg-smart-green):not(.bg-smart-blue):not(.bg-red-500) { color: #93c5fd; }
+
+/* Form controls */
+input, textarea, select {
+  color: inherit;
+  background-color: var(--bg-surface);
+}
+html.dark input,
+html.dark textarea,
+html.dark select {
+  background-color: #0f172a;
+  color: var(--text-primary-dark);
+  border-color: #1f2c45;
+}
+
+/* Selection color for clarity */
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+html.dark ::selection {
+  background: var(--accent-dark);
+  color: #050915;
+}

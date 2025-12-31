@@ -1,0 +1,81 @@
+@font-face {
+    font-family: 'MontserratArabic';
+    src: url('subset-Montserrat-Arabic-ExtraBold.woff2') format('woff2'),
+        url('subset-Montserrat-Arabic-ExtraBold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'MontserratArabic';
+    src: url('subset-Montserrat-Arabic-Bold.woff2') format('woff2'),
+        url('subset-Montserrat-Arabic-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'MontserratArabic';
+    src: url('subset-Montserrat-Arabic-Black.woff2') format('woff2'),
+        url('subset-Montserrat-Arabic-Black.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'MontserratArabic';
+    src: url('subset-Montserrat-Arabic-Light.woff2') format('woff2'),
+        url('subset-Montserrat-Arabic-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'MontserratArabic';
+    src: url('subset-Montserrat-Arabic-Regular.woff2') format('woff2'),
+        url('subset-Montserrat-Arabic-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'MontserratArabic';
+    src: url('subset-Montserrat-Arabic-Medium.woff2') format('woff2'),
+        url('subset-Montserrat-Arabic-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'MontserratArabic';
+    src: url('subset-Montserrat-Arabic-ExtraLight.woff2') format('woff2'),
+        url('subset-Montserrat-Arabic-ExtraLight.woff') format('woff');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'MontserratArabic';
+    src: url('subset-Montserrat-Arabic-SemiBold.woff2') format('woff2'),
+        url('subset-Montserrat-Arabic-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'MontserratArabic';
+    src: url('subset-Montserrat-Arabic-Thin.woff2') format('woff2'),
+        url('subset-Montserrat-Arabic-Thin.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+

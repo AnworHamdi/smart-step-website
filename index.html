@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/assets/smartstep-logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Step | الخطوة الذكية</title>
+  <meta name="description"
+    content="Smart Step: Your trusted partner in Libya for innovative communications and IT solutions. We specialize in network infrastructure, security systems, software development, and digital marketing." />
+
+  <!-- SEO and Social Media Meta Tags -->
+  <meta name="keywords"
+    content="IT solutions, Libya, communications, network, security, software development, digital marketing, Smart Step, الخطوة الذكية" />
+  <meta name="author" content="Smart Step" />
+  <link rel="canonical" href="https://smartstep.ly/" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#21409A">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://smartstep.ly/" />
+  <meta property="og:title" content="Smart Step | الخطوة الذكية" />
+  <meta property="og:description"
+    content="Your trusted partner in Libya for innovative communications and IT solutions." />
+  <meta property="og:image" content="https://smartstep.ly/og-image.png" />
+  <meta property="og:site_name" content="Smart Step" />
+  <meta property="og:locale:ar_LY" content="ar_LY" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://smartstep.ly/" />
+  <meta property="twitter:title" content="Smart Step | الخطوة الذكية" />
+  <meta property="twitter:description"
+    content="Your trusted partner in Libya for innovative communications and IT solutions." />
+  <meta property="twitter:image" content="https://smartstep.ly/og-image.png" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Readex+Pro:wght@200;300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/assets/fonts/MontserratArabic/stylesheet.css">
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+      /* English font by default */
+      --font-family-sans: 'Montserrat', sans-serif;
+    }
+
+    html.dark {
+      color-scheme: dark;
+    }
+
+    html[lang="ar"] {
+      /* Arabic font override */
+      --font-family-sans: 'MontserratArabic', 'Readex Pro', 'Montserrat', sans-serif;
+    }
+
+    body {
+      font-family: var(--font-family-sans);
+    }
+
+    /* Animations */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
+      transition-duration: 0.8s;
+    }
+
+    .animate-on-scroll.is-visible,
+    .is-visible .animate-on-scroll {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Accessibility */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'smart-blue': '#21409A',
+            'smart-green': '#6FBE44',
+            'soft-blue': '#8ab2ff',
+            'soft-green': '#99D07E',
+            zinc: {
+              950: '#09090b',
+            }
+          },
+          fontFamily: {
+            'sans': "var(--font-family-sans)",
+          },
+          aspectRatio: {
+            '4/3': '4 / 3',
+          },
+        }
+      }
+    }
+  </script>
+  <script>
+    // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+      if (event.matches) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    });
+  </script>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.4",
+    "@testing-library/react": "https://aistudiocdn.com/@testing-library/react@^16.3.0",
+    "@testing-library/jest-dom": "https://aistudiocdn.com/@testing-library/jest-dom@^6.9.1",
+    "@jest/globals": "https://aistudiocdn.com/@jest/globals@^30.2.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.29.0"
+  }
+}
+</script>
+  <link rel="stylesheet" href="/index.css">
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
+</html>
