@@ -20,6 +20,7 @@ const DashboardPage = lazy(() => import('./pages/DashboardPage'));
 const ForgotPasswordPage = lazy(() => import('./pages/ForgotPasswordPage'));
 const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage'));
 const VerifyEmailPage = lazy(() => import('./pages/VerifyEmailPage'));
+const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
 
 function App() {
   const { language } = useContext(LanguageContext);
@@ -48,6 +49,7 @@ function App() {
               <Route path="/forgot-password" element={<ForgotPasswordPage />} />
               <Route path="/reset-password" element={<ResetPasswordPage />} />
               <Route path="/verify-email/:token" element={<VerifyEmailPage />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
               <Route
                 path="/dashboard"
                 element={
