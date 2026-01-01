@@ -125,11 +125,16 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
-      await Promise.all([
-        refreshPosts(),
-        refreshUsers(),
-        refreshSettings(),
-      ]);
+      // Always load public data
+      const publicPromises = [refreshPosts(), refreshSettings()];
+
+      // Only load users if authenticated (token exists)
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        publicPromises.push(refreshUsers());
+      }
+
+      await Promise.all(publicPromises);
       setLoading(false);
     };
     loadData();
