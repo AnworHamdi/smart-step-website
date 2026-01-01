@@ -11,13 +11,22 @@ class ItemPolicy
 {
     use HandlesAuthorization;
 
-    public function viewAny(User $user): Response|bool
+    public function viewAny(?User $user): Response|bool
     {
+        // Allow public read access for unauthenticated users
+        if ($user === null) {
+            return true;
+        }
         return $user->can('view items');
     }
 
-    public function view(User $user): Response|bool
+    public function view(?User $user, Item $item): Response|bool
     {
+        // Allow public read access for published items
+        if ($user === null) {
+            // Only allow viewing published items for guests
+            return $item->status === 'published';
+        }
         return $user->can('view items');
     }
 

@@ -37,6 +37,10 @@ Route::prefix('v2')->middleware('json.api')->group(function () {
     // Public routes
     Route::post('/contact', [ContactMessageController::class, 'store']);
     Route::post('/subscribe', [EmailSubscriptionController::class, 'subscribe']);
+    
+    // Public read access for settings
+    Route::get('/settings', [SiteSettingController::class, 'index']);
+    Route::get('/settings/{key}', [SiteSettingController::class, 'show']);
 });
 
 // Protected routes for admin modules
@@ -55,10 +59,8 @@ Route::prefix('v2')->middleware(['json.api', 'auth:api'])->group(function () {
     Route::delete('/subscriptions/{subscription}', [EmailSubscriptionController::class, 'destroy']);
     Route::post('/subscriptions/broadcast', [EmailSubscriptionController::class, 'broadcast']);
 
-    // Site Settings
-    Route::get('/settings', [SiteSettingController::class, 'index']);
+    // Site Settings (Protected: Update/Delete)
     Route::put('/settings', [SiteSettingController::class, 'update']);
-    Route::get('/settings/{key}', [SiteSettingController::class, 'show']);
     Route::delete('/settings/{key}', [SiteSettingController::class, 'destroy']);
 
     // Translation
