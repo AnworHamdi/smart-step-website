@@ -1,0 +1,1 @@
+import{j as o}from"./index-C0ho8H9A.js";const e=({children:r,className:a=""})=>o.jsx("div",{className:`bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 hover:-translate-y-1 border border-gray-100 dark:border-gray-700 dark:hover:bg-gray-700 dark:hover:border-gray-600 ${a}`,children:r});export{e as C};
