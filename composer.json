@@ -1,13 +1,5 @@
 {
     "name": "anwor/smart-step-website",
     "description": "Smart Step Website - Root Bridge for Hostinger Deployment",
-    "require": {},
-    "scripts": {
-        "post-install-cmd": [
-            "cd backend && composer install --no-dev --optimize-autoloader --ignore-platform-reqs"
-        ],
-        "post-update-cmd": [
-            "cd backend && composer install --no-dev --optimize-autoloader --ignore-platform-reqs"
-        ]
-    }
+    "require": {}
 }

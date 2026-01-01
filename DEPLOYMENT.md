@@ -140,15 +140,20 @@ Hostinger's built-in Git deployment tool expects a `composer.json` in the root. 
 4.  Leave the "Install dependencies with composer" option **enabled**.
 
 ### 2. Post-Deployment Configuration
-After the first deployment succeeds, you need to configure the environment:
+After the deployment succeeds, you must manually install the backend dependencies:
 
-1.  **Environment Variables**:
-    - Go to **Files** → **File Manager**.
-    - Open `backend/.env`.
-    - Update your database credentials and `APP_URL=https://smartstep.ly`.
-    - Ensure `APP_DEBUG=false` and `APP_ENV=production`.
+1.  **Terminal Access**:
+    - Go to your Hostinger Dashboard → **Advanced** → **Terminal**.
+    - If you haven't enabled it, follow the prompts.
 
-2.  **Database**:
+2.  **Install Backend Dependencies**:
+    - In the Terminal, run:
+      ```bash
+      cd backend
+      composer install --no-dev --optimize-autoloader --ignore-platform-reqs
+      ```
+
+3.  **Environment and Database**:
     - Hostinger doesn't always allow `php artisan migrate` via the dashboard.
     - Go to **Database** → **phpMyAdmin**.
     - If you are setting up from scratch, you may need to import your schema or use the Hostinger Terminal to run migrations:
