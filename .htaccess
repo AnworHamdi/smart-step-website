@@ -7,19 +7,15 @@
     RewriteRule ^(.*)$ backend/public/index.php [L]
 
     # 2. Serve built frontend files from /dist/ if they exist
-    # First, check if the file exists in the root (unlikely for built assets)
-    RewriteCond %{REQUEST_FILENAME} -f
-    RewriteRule ^ - [L]
-
-    # If the file exists in /dist/, serve it
+    # This prioritizes established build assets over root source files
     RewriteCond %{DOCUMENT_ROOT}/dist/$1 -f
     RewriteRule ^(.*)$ dist/$1 [L]
 
-    # 3. SPA Routing: Route everything else to dist/index.html
-    # (Excluding files that already exist in backend/public if they are direct hits)
+    # 3. SPA Routing: Force everything else to dist/index.html
+    # This ensures we load the built React app and not the root index.html
     RewriteCond %{REQUEST_URI} !^/backend/public
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f [OR]
+    RewriteCond %{REQUEST_URI} ^/$
     RewriteRule ^(.*)$ dist/index.html [L]
 </IfModule>
 
