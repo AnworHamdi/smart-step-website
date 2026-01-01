@@ -158,8 +158,9 @@ After the first deployment succeeds, you need to configure the environment:
       ```
 
 3.  **Frontend**:
-    - The deployment script automatically runs `npm run build`.
-    - The `.htaccess` file in the root will automatically route traffic to the `dist/` folder.
+    - Hostinger's automated deployment environment does **not** include Node.js/npm by default.
+    - **Recommended**: Run `npm run build` locally and commit the `dist/` folder to your repository.
+    - Alternatively, if your plan includes SSH access, you can run the build manually via the Hostinger Terminal after enabling Node.js in the "Node.js Selector" menu.
 
 ---
 

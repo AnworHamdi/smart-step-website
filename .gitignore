@@ -3,7 +3,7 @@ node_modules/
 vendor/
 
 # Build output
-dist/
+# dist/ (Enabled for Hostinger deployment)
 dist-ssr/
 build/
 

@@ -4,18 +4,10 @@
     "require": {},
     "scripts": {
         "post-install-cmd": [
-            "npm install",
-            "npm run build",
             "cd backend && composer install --no-dev --optimize-autoloader --ignore-platform-reqs"
         ],
         "post-update-cmd": [
-            "npm install",
-            "npm run build",
             "cd backend && composer install --no-dev --optimize-autoloader --ignore-platform-reqs"
-        ],
-        "build": [
-            "npm install",
-            "npm run build"
         ]
     }
 }
