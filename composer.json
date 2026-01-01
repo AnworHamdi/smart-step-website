@@ -1,0 +1,29 @@
+{
+    "name": "anwor/smart-step-website",
+    "description": "Smart Step Website - Root Bridge for Hostinger Deployment",
+    "type": "project",
+    "require": {
+        "php": "^8.2"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "npm install",
+            "npm run build",
+            "cd backend && composer install --no-dev --optimize-autoloader"
+        ],
+        "post-update-cmd": [
+            "npm install",
+            "npm run build",
+            "cd backend && composer install --no-dev --optimize-autoloader"
+        ],
+        "build": [
+            "npm install",
+            "npm run build"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "laravel-json-api/laravel": true
+        }
+    }
+}

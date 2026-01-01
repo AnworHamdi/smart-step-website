@@ -129,6 +129,40 @@ server {
 
 ---
 
+## Hostinger Deployment (Premium/Business Hosting)
+
+Hostinger's built-in Git deployment tool expects a `composer.json` in the root. We have provided a bridge `composer.json` and a `.htaccess` file to make this work.
+
+### 1. Initial Setup
+1.  Go to your Hostinger Dashboard → **Website** → **Git**.
+2.  Connect your repository (`https://github.com/AnworHamdi/smart-step-website.git`).
+3.  Set the branch to `main`.
+4.  Leave the "Install dependencies with composer" option **enabled**.
+
+### 2. Post-Deployment Configuration
+After the first deployment succeeds, you need to configure the environment:
+
+1.  **Environment Variables**:
+    - Go to **Files** → **File Manager**.
+    - Open `backend/.env`.
+    - Update your database credentials and `APP_URL=https://smartstep.ly`.
+    - Ensure `APP_DEBUG=false` and `APP_ENV=production`.
+
+2.  **Database**:
+    - Hostinger doesn't always allow `php artisan migrate` via the dashboard.
+    - Go to **Database** → **phpMyAdmin**.
+    - If you are setting up from scratch, you may need to import your schema or use the Hostinger Terminal to run migrations:
+      ```bash
+      cd backend
+      php artisan migrate --force
+      ```
+
+3.  **Frontend**:
+    - The deployment script automatically runs `npm run build`.
+    - The `.htaccess` file in the root will automatically route traffic to the `dist/` folder.
+
+---
+
 ## Backend Deployment
 
 ### 1. Server Setup
