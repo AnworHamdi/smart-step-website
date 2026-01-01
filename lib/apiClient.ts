@@ -1,5 +1,6 @@
 // Use same-origin by default so Vite proxy can handle CORS in dev; allow override via VITE_API_URL for prod.
-const BASE_URL = import.meta.env.VITE_API_URL || '';
+const rawUrl = import.meta.env.VITE_API_URL;
+const BASE_URL = (rawUrl === '/' ? '' : rawUrl) || '';
 const API_VERSION = '/api/v2';
 
 // Token storage

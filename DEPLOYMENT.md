@@ -147,13 +147,25 @@ After the deployment succeeds, you must manually install the backend dependencie
     - If you haven't enabled it, follow the prompts.
 
 2.  **Install Backend Dependencies**:
-    - In the Terminal, run:
+    - Hostinger terminal often defaults to an older PHP version. You **must** specify PHP 8.2 or 8.3.
+    - Run:
       ```bash
       cd backend
-      composer install --no-dev --optimize-autoloader --ignore-platform-reqs
+      /usr/bin/php8.2 /usr/local/bin/composer install --no-dev --optimize-autoloader --ignore-platform-reqs
+      ```
+    - *Note: If `/usr/bin/php8.2` doesn't work, try `php8.2` or check your Hostinger dashboard for the correct CLI path.*
+
+3.  **App Key and Database**:
+    - To generate the App Key:
+      ```bash
+      /usr/bin/php8.2 artisan key:generate
+      ```
+    - To run migrations:
+      ```bash
+      /usr/bin/php8.2 artisan migrate --force
       ```
 
-3.  **Environment and Database**:
+4.  **Environment and Database**:
     - Hostinger doesn't always allow `php artisan migrate` via the dashboard.
     - Go to **Database** → **phpMyAdmin**.
     - If you are setting up from scratch, you may need to import your schema or use the Hostinger Terminal to run migrations:
