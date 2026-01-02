@@ -1,11 +1,12 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import { User } from '../types';
-import { login as apiLogin, logout as apiLogout, me as apiMe, getToken, clearToken } from '../lib/apiClient';
+import { login as apiLogin, logout as apiLogout, me as apiMe, getToken, clearToken, requestPasswordReset } from '../lib/apiClient';
 
 interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+  initiatePasswordReset: (email: string) => Promise<boolean>;
   loading: boolean;
   isAuthenticated: boolean;
 }
@@ -75,10 +76,24 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
+  const initiatePasswordReset = async (email: string): Promise<boolean> => {
+    try {
+      const response = await requestPasswordReset(email);
+      // Store email for reset page
+      sessionStorage.setItem('resetEmail', email);
+      return response.exists !== false;
+    } catch (error) {
+      console.error('Password reset error:', error);
+      // Still return true for security - don't reveal if email exists
+      sessionStorage.setItem('resetEmail', email);
+      return true;
+    }
+  };
+
   const isAuthenticated = !!user;
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading, isAuthenticated }}>
+    <AuthContext.Provider value={{ user, login, logout, initiatePasswordReset, loading, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );

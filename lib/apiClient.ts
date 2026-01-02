@@ -107,6 +107,21 @@ export async function me(): Promise<any> {
   return request('/me', { method: 'GET' });
 }
 
+// Password Reset
+export async function requestPasswordReset(email: string): Promise<{ exists: boolean; message: string }> {
+  return request('/password-forgot', {
+    method: 'POST',
+    body: JSON.stringify({ email }),
+  });
+}
+
+export async function resetPassword(email: string, code: string, password: string, password_confirmation: string): Promise<any> {
+  return request('/password-reset', {
+    method: 'POST',
+    body: JSON.stringify({ email, code, password, password_confirmation }),
+  });
+}
+
 // ============================================
 // Items (Content/Posts)
 // ============================================

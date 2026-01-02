@@ -67,30 +67,30 @@ const LoginPage: React.FC = () => {
             </div>
             <form className="mt-8 space-y-6" onSubmit={handleSubmit} noValidate>
               <input type="hidden" name="remember" defaultValue="true" />
-              <div className="rounded-md shadow-sm -space-y-px">
+              <div className="space-y-4">
                 <div>
-                  <label htmlFor="email-address" className="sr-only">{t('loginPage.email')}</label>
+                  <label htmlFor="email-address" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('loginPage.email')}</label>
                   <input
                     id="email-address"
                     name="email"
                     type="email"
                     autoComplete="email"
                     required
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 rounded-t-md focus:outline-none focus:ring-smart-blue focus:border-smart-blue focus:z-10 sm:text-sm"
+                    className="appearance-none relative block w-full px-4 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-smart-blue focus:border-smart-blue sm:text-sm transition-colors"
                     placeholder={t('loginPage.emailPlaceholder')}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div>
-                  <label htmlFor="password" className="sr-only">{t('loginPage.password')}</label>
+                  <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('loginPage.password')}</label>
                   <input
                     id="password"
                     name="password"
                     type="password"
                     autoComplete="current-password"
                     required
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 rounded-b-md focus:outline-none focus:ring-smart-blue focus:border-smart-blue focus:z-10 sm:text-sm"
+                    className="appearance-none relative block w-full px-4 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-smart-blue focus:border-smart-blue sm:text-sm transition-colors"
                     placeholder={t('loginPage.passwordPlaceholder')}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}

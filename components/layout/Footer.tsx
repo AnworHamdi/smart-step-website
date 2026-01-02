@@ -41,7 +41,7 @@ const Footer: React.FC = () => {
     <footer className="bg-white dark:bg-zinc-950 border-t border-gray-100 dark:border-zinc-800 transition-colors duration-300">
       <div className="container mx-auto px-6 py-12">
         {!isAuthenticated && (
-          <div className="bg-gradient-to-r from-smart-blue to-soft-blue text-white p-8 rounded-xl text-center mb-12 shadow-lg">
+          <div className="bg-gradient-to-r from-smart-blue to-soft-blue text-white p-8 rounded-xl text-center mb-12 shadow-lg [text-shadow:0_1px_2px_rgba(0,0,0,0.3)]">
             <h3 className="text-2xl font-bold mb-2">{t('footer.newsletter.title')}</h3>
             <p className="mb-6 max-w-md mx-auto opacity-90">{t('footer.newsletter.subtitle')}</p>
             {success ? (
@@ -64,7 +64,7 @@ const Footer: React.FC = () => {
                   <button
                     type="submit"
                     disabled={subscribing}
-                    className="w-full sm:w-auto bg-smart-green hover:bg-opacity-90 transition-all duration-300 px-6 py-3 rounded-lg font-bold text-sm uppercase tracking-wider disabled:bg-opacity-70 disabled:cursor-not-allowed transform hover:-translate-y-0.5"
+                    className="w-full sm:w-auto bg-smart-green hover:bg-opacity-90 transition-all duration-300 px-6 py-3 rounded-lg font-bold text-sm uppercase tracking-wider disabled:bg-opacity-70 disabled:cursor-not-allowed transform hover:-translate-y-0.5 [text-shadow:0_1px_2px_rgba(0,0,0,0.3)]"
                   >
                     {subscribing ? t('footer.newsletter.subscribing') : t('footer.newsletter.subscribe')}
                   </button>

@@ -1,5 +1,5 @@
 
-import React, { useContext } from 'react';
+import React, { useContext, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '../hooks/useTranslation';
 import { Post } from '../types';
@@ -8,10 +8,12 @@ import { DataContext } from '../contexts/DataContext';
 import { useSeo } from '../hooks/useSeo';
 import BlogCardSkeleton from '../components/ui/BlogCardSkeleton';
 
+const POSTS_PER_PAGE = 6;
+
 // Reading time estimation helper
 const estimateReadingTime = (content: string): number => {
   const wordsPerMinute = 200;
-  const text = content.replace(/<[^>]*>/g, ''); // Strip HTML
+  const text = content.replace(/<[^>]*>/g, '');
   const words = text.split(/\s+/).length;
   return Math.max(1, Math.ceil(words / wordsPerMinute));
 };
@@ -24,7 +26,6 @@ const FeaturedPost: React.FC<{ post: Post }> = ({ post }) => {
   return (
     <Link to={`/blog/${post.id}`} className="group block mb-16">
       <article className="relative overflow-hidden rounded-2xl bg-white dark:bg-zinc-900 shadow-lg hover:shadow-2xl transition-all duration-500">
-        {/* Hero Image */}
         <div className="relative aspect-[21/9] overflow-hidden">
           <img
             src={post.imageUrl}
@@ -32,22 +33,15 @@ const FeaturedPost: React.FC<{ post: Post }> = ({ post }) => {
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             loading="eager"
           />
-          {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-
-          {/* Content Overlay */}
-          <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
-            {/* Category Badge */}
+          <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 [text-shadow:0_1px_3px_rgba(0,0,0,0.5)]">
             <span className="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-white bg-smart-blue/90 rounded-full mb-4 uppercase">
               Featured
             </span>
-
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-4 group-hover:text-smart-green transition-colors duration-300">
               {t(post.title)}
             </h2>
-
             <p className="text-white/80 text-base md:text-lg line-clamp-2 max-w-3xl mb-6" dangerouslySetInnerHTML={{ __html: t(post.excerpt) }} />
-
             <div className="flex items-center gap-4 text-sm text-white/70">
               <span className="font-medium">{post.author}</span>
               <span>•</span>
@@ -71,9 +65,8 @@ const BlogCard: React.FC<{ post: Post; index: number }> = ({ post, index }) => {
     <Link to={`/blog/${post.id}`} className="group block">
       <article
         className="h-full bg-white dark:bg-zinc-900 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 animate-on-scroll"
-        style={{ transitionDelay: `${index * 100}ms` }}
+        style={{ transitionDelay: `${(index % POSTS_PER_PAGE) * 100}ms` }}
       >
-        {/* Image Container */}
         <div className="relative aspect-[16/10] overflow-hidden bg-gray-100 dark:bg-zinc-800">
           <img
             src={post.imageUrl}
@@ -82,10 +75,7 @@ const BlogCard: React.FC<{ post: Post; index: number }> = ({ post, index }) => {
             loading="lazy"
           />
         </div>
-
-        {/* Content */}
         <div className="p-6">
-          {/* Meta Info */}
           <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400 mb-3">
             <span className="font-medium text-smart-blue">{post.author}</span>
             <span>•</span>
@@ -93,19 +83,13 @@ const BlogCard: React.FC<{ post: Post; index: number }> = ({ post, index }) => {
             <span>•</span>
             <span>{readingTime} min</span>
           </div>
-
-          {/* Title */}
           <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 leading-snug group-hover:text-smart-blue transition-colors duration-300 line-clamp-2">
             {t(post.title)}
           </h3>
-
-          {/* Excerpt */}
           <p
             className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed line-clamp-3"
             dangerouslySetInnerHTML={{ __html: t(post.excerpt) }}
           />
-
-          {/* Read More Link */}
           <div className="mt-4 flex items-center text-sm font-semibold text-smart-blue group-hover:text-smart-green transition-colors duration-300">
             <span>{t('blog.readMore')}</span>
             <svg className="w-4 h-4 ms-1 transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -137,9 +121,28 @@ const BlogPage: React.FC = () => {
   useSeo(t('blog.title'), t('blog.subtitle'));
   const gridRef = useScrollAnimation<HTMLDivElement>();
 
-  const publishedPosts = posts.filter(p => p.status === 'published');
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const publishedPosts = useMemo(() =>
+    posts.filter(p => p.status === 'published'),
+    [posts]
+  );
+
   const featuredPost = publishedPosts[0];
-  const remainingPosts = publishedPosts.slice(1);
+  const allRemainingPosts = publishedPosts.slice(1);
+
+  // Paginated posts - show POSTS_PER_PAGE * currentPage
+  const visiblePosts = useMemo(() =>
+    allRemainingPosts.slice(0, POSTS_PER_PAGE * currentPage),
+    [allRemainingPosts, currentPage]
+  );
+
+  const hasMorePosts = visiblePosts.length < allRemainingPosts.length;
+
+  const loadMore = () => {
+    setCurrentPage(prev => prev + 1);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 transition-colors duration-300">
@@ -175,11 +178,27 @@ const BlogPage: React.FC = () => {
               {featuredPost && <FeaturedPost post={featuredPost} />}
 
               {/* Remaining Posts Grid */}
-              {remainingPosts.length > 0 && (
+              {visiblePosts.length > 0 && (
                 <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-                  {remainingPosts.map((post, index) => (
+                  {visiblePosts.map((post, index) => (
                     <BlogCard key={post.id} post={post} index={index} />
                   ))}
+                </div>
+              )}
+
+              {/* Load More Button */}
+              {hasMorePosts && (
+                <div className="mt-12 text-center">
+                  <button
+                    onClick={loadMore}
+                    className="px-8 py-3 bg-white dark:bg-zinc-900 border-2 border-smart-blue text-smart-blue dark:text-soft-blue font-bold rounded-lg hover:bg-smart-blue hover:text-white dark:hover:bg-soft-blue dark:hover:text-gray-900 transition-all duration-300 shadow-sm hover:shadow-md"
+                  >
+                    {t('blog.loadMore') || 'Load More Posts'}
+                  </button>
+                  <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
+                    {t('blog.showingPosts', { shown: visiblePosts.length + 1, total: publishedPosts.length }) ||
+                      `Showing ${visiblePosts.length + 1} of ${publishedPosts.length} posts`}
+                  </p>
                 </div>
               )}
             </>
