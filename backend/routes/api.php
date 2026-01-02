@@ -65,6 +65,11 @@ Route::prefix('v2')->middleware(['json.api', 'auth:api'])->group(function () {
 
     // Translation
     Route::post('translate', [TranslationController::class, 'translate']);
+
+    // Media Library
+    Route::get('/media', [\App\Http\Controllers\Api\V2\MediaController::class, 'index']);
+    Route::post('/media', [\App\Http\Controllers\Api\V2\MediaController::class, 'store']);
+    Route::delete('/media/{id}', [\App\Http\Controllers\Api\V2\MediaController::class, 'destroy']);
 });
 
 JsonApiRoute::server('v2')->prefix('v2')->resources(function (ResourceRegistrar $server) {

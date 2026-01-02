@@ -339,26 +339,34 @@ export async function uploadFile(resource: string, id: string | number, field: s
 }
 
 // ============================================
-// Media (Legacy - kept for MediaPicker compatibility)
+// Media Library
 // ============================================
 
 export async function listMedia(type?: string) {
-  // The new CMS doesn't have a separate media endpoint
-  // Return empty array for now - media is handled per-item
-  console.warn('listMedia is deprecated - media is now handled per-item');
-  return { data: [] };
+  const token = getToken();
+  const res = await fetch(`${BASE_URL}${API_VERSION}/media${type ? `?type=${type}` : ''}`, {
+    headers: {
+      'Accept': 'application/json',
+      ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch media');
+  }
+
+  return res.json();
 }
 
 export async function uploadMedia(file: File, altText?: string) {
   const token = getToken();
   const formData = new FormData();
-  formData.append('attachment', file);
+  formData.append('file', file);
   if (altText) {
     formData.append('alt_text', altText);
   }
 
-  // Use the generic upload endpoint
-  const res = await fetch(`${BASE_URL}${API_VERSION}/uploads/items/0/image`, {
+  const res = await fetch(`${BASE_URL}${API_VERSION}/media`, {
     method: 'POST',
     headers: {
       ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
@@ -371,12 +379,42 @@ export async function uploadMedia(file: File, altText?: string) {
     throw new Error(text || `Upload failed: ${res.status}`);
   }
 
-  return res.json();
+  const data = await res.json();
+
+  // Normalize response: always return { media: {...} } format
+  if (data.media) {
+    return data;
+  }
+
+  // If backend returns { url: "..." }, wrap it
+  return {
+    media: {
+      id: Date.now(), // temp ID if not provided
+      url: data.url,
+      filename: file.name,
+      original_name: file.name,
+      mime_type: file.type,
+      size: file.size,
+      created_at: new Date().toISOString(),
+    }
+  };
 }
 
 export async function deleteMedia(id: string | number) {
-  console.warn('deleteMedia is deprecated - media is now handled per-item');
-  return null;
+  const token = getToken();
+  const res = await fetch(`${BASE_URL}${API_VERSION}/media/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to delete media');
+  }
+
+  return res.json();
 }
 
 // ============================================

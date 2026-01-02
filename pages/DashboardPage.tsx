@@ -8,6 +8,7 @@ import SiteSettings from '../components/dashboard/SiteSettings';
 import ManageTeam from '../components/dashboard/ManageTeam';
 import ManageMessages from '../components/dashboard/ManageMessages';
 import ManageSubscriptions from '../components/dashboard/ManageSubscriptions';
+import ManageMedia from '../components/dashboard/ManageMedia';
 
 const DashboardPage: React.FC = () => {
   const { user } = useAuth();
@@ -19,6 +20,8 @@ const DashboardPage: React.FC = () => {
     switch (activeSection) {
       case 'posts':
         return <ManagePosts />;
+      case 'media':
+        return <ManageMedia />;
       case 'messages':
         return <ManageMessages />;
       case 'subscriptions':
@@ -37,6 +40,7 @@ const DashboardPage: React.FC = () => {
   const getSectionTitle = () => {
     const titles: Record<string, string> = {
       posts: t('dashboard.tabs.posts'),
+      media: 'Media Library',
       messages: t('dashboard.tabs.messages'),
       subscriptions: t('dashboard.tabs.subscriptions') || 'Subscriptions',
       users: t('dashboard.tabs.users'),
