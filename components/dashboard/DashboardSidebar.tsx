@@ -82,7 +82,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
 
     const adminSections = [
         { id: 'posts', label: t('dashboard.tabs.posts'), icon: PostsIcon },
-        { id: 'media', label: 'Media Library', icon: MediaIcon },
+        { id: 'media', label: t('dashboard.tabs.media'), icon: MediaIcon },
         { id: 'messages', label: t('dashboard.tabs.messages'), icon: MessagesIcon },
         { id: 'subscriptions', label: t('dashboard.tabs.subscriptions') || 'Subscriptions', icon: SubscriptionsIcon },
         { id: 'users', label: t('dashboard.tabs.users'), icon: UsersIcon },
@@ -92,7 +92,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
 
     const employeeSections = [
         { id: 'posts', label: t('dashboard.tabs.posts'), icon: PostsIcon },
-        { id: 'media', label: 'Media Library', icon: MediaIcon },
+        { id: 'media', label: t('dashboard.tabs.media'), icon: MediaIcon },
     ];
 
     const sections = (user?.role === 'admin' || user?.role === 'Super admin') ? adminSections : employeeSections;

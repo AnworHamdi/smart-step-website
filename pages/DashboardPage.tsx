@@ -40,7 +40,7 @@ const DashboardPage: React.FC = () => {
   const getSectionTitle = () => {
     const titles: Record<string, string> = {
       posts: t('dashboard.tabs.posts'),
-      media: 'Media Library',
+      media: t('dashboard.tabs.media'),
       messages: t('dashboard.tabs.messages'),
       subscriptions: t('dashboard.tabs.subscriptions') || 'Subscriptions',
       users: t('dashboard.tabs.users'),

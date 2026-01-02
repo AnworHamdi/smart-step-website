@@ -227,6 +227,7 @@ export const translations = {
     dashboard: {
       tabs: {
         posts: "إدارة المقالات",
+        media: "مكتبة الوسائط",
         messages: "رسائل التواصل",
         subscriptions: "الاشتراكات",
         users: "إدارة المستخدمين",
@@ -675,6 +676,7 @@ export const translations = {
     dashboard: {
       tabs: {
         posts: "Manage Posts",
+        media: "Media Library",
         messages: "Contact Messages",
         subscriptions: "Subscriptions",
         users: "Manage Users",

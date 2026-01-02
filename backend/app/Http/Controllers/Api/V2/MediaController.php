@@ -18,6 +18,12 @@ class MediaController extends Controller
         $disk = 'public';
         $directory = 'media';
 
+        // Ensure media directory exists
+        if (!Storage::disk($disk)->exists($directory)) {
+            Storage::disk($disk)->makeDirectory($directory);
+            return response()->json(['data' => []]);
+        }
+
         // Get all files from the media directory
         $files = Storage::disk($disk)->files($directory);
         
@@ -29,12 +35,15 @@ class MediaController extends Controller
                 return null;
             }
 
+            // Generate absolute URL
+            $url = url('/storage/' . $path);
+
             return [
-                'id' => $index + 1, // Using index as ID since files don't have DB entries
+                'id' => $index + 1,
                 'filename' => basename($path),
                 'original_name' => basename($path),
                 'path' => $path,
-                'url' => Storage::disk($disk)->url($path),
+                'url' => $url,
                 'mime_type' => $mimeType,
                 'size' => Storage::disk($disk)->size($path),
                 'alt_text' => null,
@@ -63,7 +72,7 @@ class MediaController extends Controller
         
         // Store in public/media directory
         $path = $file->storeAs('media', $filename, 'public');
-        $url = Storage::disk('public')->url($path);
+        $url = url('/storage/' . $path);
 
         $media = [
             'id' => time(), // Using timestamp as temporary ID

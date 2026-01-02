@@ -41,34 +41,34 @@ const ManageUsers: React.FC = () => {
   return (
     <Card>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">{t('dashboard.users.title')}</h2>
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">{t('dashboard.users.title')}</h2>
         <Button onClick={handleAddNew}>{t('dashboard.users.addUser')}</Button>
       </div>
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+          <thead className="bg-gray-50 dark:bg-gray-700/50">
             <tr>
-              <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">{t('dashboard.users.table.email')}</th>
-              <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">{t('dashboard.users.table.role')}</th>
-              <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">{t('dashboard.users.table.actions')}</th>
+              <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('dashboard.users.table.email')}</th>
+              <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('dashboard.users.table.role')}</th>
+              <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('dashboard.users.table.actions')}</th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
             {users.length > 0 ? users.map((user) => {
               const isSuperAdmin = user.email === SUPER_ADMIN_EMAIL;
               return (
-                <tr key={user.id} className="odd:bg-white even:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{user.email}</td>
+                <tr key={user.id} className="odd:bg-white even:bg-gray-50 dark:odd:bg-gray-800 dark:even:bg-black/10">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">{user.email}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
                     <Badge color={user.role === 'Super admin' ? 'purple' : user.role === 'admin' ? 'blue' : 'gray'}>
                       {user.role === 'Super admin' ? 'Super Admin' : t(user.role === 'admin' ? 'dashboard.users.roleAdmin' : 'dashboard.users.roleEmployee')}
                     </Badge>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2 rtl:space-x-reverse">
-                    <button onClick={() => handleEdit(user)} className={`text-blue-600 hover:text-blue-900 ${isSuperAdmin ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={isSuperAdmin}>
+                    <button onClick={() => handleEdit(user)} className={`text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 ${isSuperAdmin ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={isSuperAdmin}>
                       {t('dashboard.users.edit')}
                     </button>
-                    <button onClick={() => handleDelete(user)} className={`text-red-600 hover:text-red-900 ${isSuperAdmin ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={isSuperAdmin}>
+                    <button onClick={() => handleDelete(user)} className={`text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 ${isSuperAdmin ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={isSuperAdmin}>
                       {t('dashboard.users.delete')}
                     </button>
                   </td>
@@ -76,7 +76,7 @@ const ManageUsers: React.FC = () => {
               )
             }) : (
               <tr>
-                <td colSpan={3} className="text-center py-10 text-gray-500">{t('dashboard.users.noUsers')}</td>
+                <td colSpan={3} className="text-center py-10 text-gray-500 dark:text-gray-400">{t('dashboard.users.noUsers')}</td>
               </tr>
             )}
           </tbody>
