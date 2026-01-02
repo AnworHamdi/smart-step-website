@@ -1,6 +1,5 @@
 import React, { useState, useMemo, useContext, useRef, useEffect } from 'react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import RichTextEditor from '../ui/RichTextEditor';
 import { DataContext } from '../../contexts/DataContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTranslation } from '../../hooks/useTranslation';
@@ -325,17 +324,6 @@ const ManagePosts: React.FC = () => {
     const hasContent = formData[field].en.trim() || formData[field].ar.trim();
     const isRichText = field === 'content';
 
-    const quillModules = {
-      toolbar: [
-        [{ 'header': [1, 2, 3, false] }],
-        ['bold', 'italic', 'underline', 'strike'],
-        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-        ['link', 'clean'],
-        [{ 'direction': 'rtl' }],
-        [{ 'align': [] }]
-      ],
-    };
-
     return (
       <div className="space-y-3">
         <div className="flex items-center justify-between">
@@ -363,16 +351,12 @@ const ManagePosts: React.FC = () => {
               <LanguageIcon className="h-3 w-3 text-gray-400" />
             </div>
             {isRichText ? (
-              <div className="bg-white dark:bg-gray-700 rounded-lg overflow-hidden border border-gray-300 dark:border-gray-600">
-                <ReactQuill
-                  theme="snow"
-                  value={formData[field].en}
-                  onChange={(val) => handleQuillChange(field, 'en', val)}
-                  modules={quillModules}
-                  placeholder={`Enter ${field} in English...`}
-                  className="bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                />
-              </div>
+              <RichTextEditor
+                value={formData[field].en}
+                onChange={(val) => handleQuillChange(field, 'en', val)}
+                placeholder={`Enter ${field} in English...`}
+                dir="ltr"
+              />
             ) : (
               <InputComponent
                 name={`${field}.en`}
@@ -391,20 +375,12 @@ const ManagePosts: React.FC = () => {
               <LanguageIcon className="h-3 w-3 text-gray-400" />
             </div>
             {isRichText ? (
-              <div className="bg-white dark:bg-gray-700 rounded-lg overflow-hidden border border-gray-300 dark:border-gray-600" dir="rtl">
-                <style>{`
-                  .ql-editor { text-align: right; direction: rtl; }
-                  .ql-editor.ql-blank::before { left: auto; right: 15px; }
-                `}</style>
-                <ReactQuill
-                  theme="snow"
-                  value={formData[field].ar}
-                  onChange={(val) => handleQuillChange(field, 'ar', val)}
-                  modules={quillModules}
-                  placeholder={`أدخل ${(field as string) === 'title' ? 'العنوان' : (field as string) === 'excerpt' ? 'المقتطف' : 'المحتوى'} بالعربية...`}
-                  className="bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                />
-              </div>
+              <RichTextEditor
+                value={formData[field].ar}
+                onChange={(val) => handleQuillChange(field, 'ar', val)}
+                placeholder={`أدخل ${(field as string) === 'title' ? 'العنوان' : (field as string) === 'excerpt' ? 'المقتطف' : 'المحتوى'} بالعربية...`}
+                dir="rtl"
+              />
             ) : (
               <InputComponent
                 name={`${field}.ar`}

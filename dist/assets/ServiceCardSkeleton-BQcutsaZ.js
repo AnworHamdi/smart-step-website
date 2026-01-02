@@ -1,0 +1,1 @@
+import{j as e,b as s}from"./index-CNPq4IXK.js";import{C as a}from"./Card-XH0dO2Dj.js";const t=()=>e.jsx(a,{children:e.jsxs("div",{className:"flex flex-col items-center text-center",children:[e.jsx(s,{className:"w-16 h-16 rounded-full mb-4"}),e.jsx(s,{className:"h-6 w-3/4 mb-3"}),e.jsx(s,{className:"h-4 w-full"}),e.jsx(s,{className:"h-4 w-5/6 mt-1"})]})});export{t as S};
