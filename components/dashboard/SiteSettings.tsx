@@ -174,148 +174,159 @@ const SiteSettings: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <Card>
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">{t('dashboard.settings.title')}</h2>
-          <p className="text-gray-500 dark:text-gray-400 mt-1">{t('dashboard.settings.subtitle')}</p>
-        </div>
-        <form onSubmit={handleSubmit} className="space-y-6 max-w-lg">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Website Logo</label>
-            <div className="flex items-center gap-4 mt-2">
-              <div className="w-24 h-24 bg-gray-100 dark:bg-gray-700 border dark:border-gray-600 rounded-md flex items-center justify-center overflow-hidden">
-                {formData.logoUrl ? (
-                  <img src={formData.logoUrl} alt="Logo Preview" className="max-w-full max-h-full object-contain" />
-                ) : (
-                  <span className="text-xs text-gray-500 dark:text-gray-400 p-2 text-center">No Logo</span>
-                )}
+      {/* Two-column layout for settings */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Site Settings Card */}
+        <Card>
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">{t('dashboard.settings.title')}</h2>
+            <p className="text-gray-500 dark:text-gray-400 mt-1">{t('dashboard.settings.subtitle')}</p>
+          </div>
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Website Logo</label>
+              <div className="flex items-center gap-4 mt-2">
+                <div className="w-20 h-20 bg-gray-100 dark:bg-gray-700 border dark:border-gray-600 rounded-md flex items-center justify-center overflow-hidden">
+                  {formData.logoUrl ? (
+                    <img src={formData.logoUrl} alt="Logo Preview" className="max-w-full max-h-full object-contain" />
+                  ) : (
+                    <span className="text-xs text-gray-500 dark:text-gray-400 p-2 text-center">No Logo</span>
+                  )}
+                </div>
+                <input type="file" accept="image/png, image/jpeg, image/svg+xml" ref={fileInputRef} onChange={handleFileChange} hidden />
+                <Button type="button" variant="secondary" onClick={() => fileInputRef.current?.click()}>
+                  Upload Logo
+                </Button>
               </div>
-              <input type="file" accept="image/png, image/jpeg, image/svg+xml" ref={fileInputRef} onChange={handleFileChange} hidden />
-              <Button type="button" variant="secondary" onClick={() => fileInputRef.current?.click()}>
-                Upload Logo
-              </Button>
             </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 relative">
+              <div className="absolute top-2 left-1/2 -translate-x-1/2 rtl:translate-x-1/2 flex items-center justify-center h-5 w-5 bg-gray-100 dark:bg-gray-600 rounded-full border dark:border-gray-500 z-10">
+                {isTranslating ? <MiniSpinner className="h-4 w-4 text-smart-blue" /> : <LanguageIcon className="h-4 w-4 text-gray-400" />}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  {t('dashboard.settings.addressEn')}
+                </label>
+                <input type="text" name="address.en" value={formData.address.en} onChange={handleInputChange} className={getInputClasses()} />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  {t('dashboard.settings.addressAr')}
+                </label>
+                <input type="text" name="address.ar" value={formData.address.ar} onChange={handleInputChange} dir="rtl" className={getInputClasses()} />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('dashboard.settings.phone')}</label>
+              <input type="text" name="phone" value={formData.phone} onChange={handleInputChange} className={getInputClasses()} />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('dashboard.settings.email')}</label>
+              <input type="email" name="email" value={formData.email} onChange={handleInputChange} className={getInputClasses()} />
+            </div>
+            <div className="pt-4 flex items-center gap-4">
+              <Button type="submit" disabled={isSubmitting} className="flex items-center justify-center min-w-[120px]">
+                {isSubmitting ? <LoadingSpinner className="h-5 w-5 text-white" /> : t('dashboard.settings.save')}
+              </Button>
+              {showSuccess && (
+                <div className="flex items-center gap-2 text-green-600 dark:text-green-400 transition-opacity duration-300">
+                  <CheckIcon className="h-5 w-5" />
+                  <span>{t('dashboard.settings.success')}</span>
+                </div>
+              )}
+            </div>
+          </form>
+        </Card>
+
+        {/* Translation Settings Card */}
+        <Card>
+          <div className="mb-6">
+            <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Translation Settings</h3>
+            <p className="text-gray-500 dark:text-gray-400 mt-1">Configure automatic translation behavior</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 relative">
-            <div className="absolute top-2 left-1/2 -translate-x-1/2 rtl:translate-x-1/2 flex items-center justify-center h-5 w-5 bg-gray-100 dark:bg-gray-600 rounded-full border dark:border-gray-500 z-10">
-              {isTranslating ? <MiniSpinner className="h-4 w-4 text-smart-blue" /> : <LanguageIcon className="h-4 w-4 text-gray-400" />}
+          <div className="space-y-5">
+            {/* Auto-translate toggle */}
+            <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Auto-Translate Content
+                </label>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  Automatically translate content as you type
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={handleAutoTranslateToggle}
+                className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-smart-blue focus:ring-offset-2 ${autoTranslateEnabled ? 'bg-smart-blue' : 'bg-gray-300 dark:bg-gray-600'
+                  }`}
+              >
+                <span
+                  className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${autoTranslateEnabled ? 'translate-x-5' : 'translate-x-0'
+                    }`}
+                />
+              </button>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                {t('dashboard.settings.addressEn')}
-              </label>
-              <input type="text" name="address.en" value={formData.address.en} onChange={handleInputChange} className={getInputClasses()} />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                {t('dashboard.settings.addressAr')}
-              </label>
-              <input type="text" name="address.ar" value={formData.address.ar} onChange={handleInputChange} dir="rtl" className={getInputClasses()} />
-            </div>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('dashboard.settings.phone')}</label>
-            <input type="text" name="phone" value={formData.phone} onChange={handleInputChange} className={getInputClasses()} />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('dashboard.settings.email')}</label>
-            <input type="email" name="email" value={formData.email} onChange={handleInputChange} className={getInputClasses()} />
-          </div>
-          <div className="pt-4 flex items-center gap-4">
-            <Button type="submit" disabled={isSubmitting} className="flex items-center justify-center min-w-[150px]">
-              {isSubmitting ? <LoadingSpinner className="h-5 w-5 text-white" /> : t('dashboard.settings.save')}
-            </Button>
-            {showSuccess && (
-              <div className="flex items-center gap-2 text-green-600 dark:text-green-400 transition-opacity duration-300">
-                <CheckIcon className="h-5 w-5" />
-                <span>{t('dashboard.settings.success')}</span>
+
+            {/* API Key Management - Super admin only */}
+            {isSuperAdmin && (
+              <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Gemini API Key (Super Admin Only)
+                </label>
+                <div className="flex gap-2">
+                  <div className="relative flex-1">
+                    <input
+                      type={showApiKey ? 'text' : 'password'}
+                      value={apiKey}
+                      onChange={(e) => setApiKey(e.target.value)}
+                      placeholder="Enter your Gemini API key"
+                      className={getInputClasses()}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowApiKey(!showApiKey)}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                    >
+                      {showApiKey ? '🙈' : '👁'}
+                    </button>
+                  </div>
+                </div>
+                <div className="flex gap-2 mt-3">
+                  <Button
+                    type="button"
+                    onClick={handleSaveApiKey}
+                    disabled={!apiKey.trim() || apiKeyStatus === 'saving'}
+                    className="text-sm"
+                  >
+                    {apiKeyStatus === 'saving' ? 'Saving...' : apiKeyStatus === 'saved' ? '✓ Saved' : 'Save Key'}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    onClick={handleDeleteApiKey}
+                    className="text-sm"
+                  >
+                    Delete Key
+                  </Button>
+                </div>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                  Get your API key from <a href="https://makersuite.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-smart-blue hover:underline">Google AI Studio</a>
+                </p>
               </div>
             )}
-          </div>
-        </form>
-      </Card>
 
-      {/* Translation Settings */}
-      <Card>
-        <div className="mb-6">
-          <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Translation Settings</h3>
-          <p className="text-gray-500 dark:text-gray-400 mt-1">Configure automatic translation behavior</p>
-        </div>
-
-        <div className="space-y-4 max-w-lg">
-          {/* Auto-translate toggle */}
-          <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Auto-Translate Content
-              </label>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                Automatically translate content as you type
+            {/* Note about translation */}
+            <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+              <p className="text-sm text-blue-700 dark:text-blue-300">
+                <strong>Note:</strong> When auto-translate is enabled, content will be automatically translated as you type in either language field. The translation uses Google's Gemini AI.
               </p>
             </div>
-            <button
-              type="button"
-              onClick={handleAutoTranslateToggle}
-              className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-smart-blue focus:ring-offset-2 ${autoTranslateEnabled ? 'bg-smart-blue' : 'bg-gray-300 dark:bg-gray-600'
-                }`}
-            >
-              <span
-                className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${autoTranslateEnabled ? 'translate-x-5' : 'translate-x-0'
-                  }`}
-              />
-            </button>
           </div>
-
-          {/* API Key Management - Super admin only */}
-          {isSuperAdmin && (
-            <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Gemini API Key (Super Admin Only)
-              </label>
-              <div className="flex gap-2">
-                <div className="relative flex-1">
-                  <input
-                    type={showApiKey ? 'text' : 'password'}
-                    value={apiKey}
-                    onChange={(e) => setApiKey(e.target.value)}
-                    placeholder="Enter your Gemini API key"
-                    className={getInputClasses()}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowApiKey(!showApiKey)}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                  >
-                    {showApiKey ? '🙈' : '👁'}
-                  </button>
-                </div>
-              </div>
-              <div className="flex gap-2 mt-3">
-                <Button
-                  type="button"
-                  onClick={handleSaveApiKey}
-                  disabled={!apiKey.trim() || apiKeyStatus === 'saving'}
-                  className="text-sm"
-                >
-                  {apiKeyStatus === 'saving' ? 'Saving...' : apiKeyStatus === 'saved' ? '✓ Saved' : 'Save Key'}
-                </Button>
-                <Button
-                  type="button"
-                  variant="secondary"
-                  onClick={handleDeleteApiKey}
-                  className="text-sm"
-                >
-                  Delete Key
-                </Button>
-              </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-                Get your API key from <a href="https://makersuite.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-smart-blue hover:underline">Google AI Studio</a>
-              </p>
-            </div>
-          )}
-        </div>
-      </Card>
+        </Card>
+      </div>
 
       {cropperState.isOpen && (
         <LogoCropperModal

@@ -24,10 +24,13 @@ class MediaController extends Controller
             return response()->json(['data' => []]);
         }
 
+        // Get base URL from request to work correctly in production
+        $baseUrl = $request->getSchemeAndHttpHost();
+
         // Get all files from the media directory
         $files = Storage::disk($disk)->files($directory);
         
-        $media = collect($files)->map(function ($path, $index) use ($disk, $type) {
+        $media = collect($files)->map(function ($path, $index) use ($disk, $type, $baseUrl) {
             $mimeType = Storage::disk($disk)->mimeType($path);
             
             // Filter by type if specified
@@ -35,8 +38,8 @@ class MediaController extends Controller
                 return null;
             }
 
-            // Generate absolute URL
-            $url = url('/storage/' . $path);
+            // Generate absolute URL using request's host
+            $url = $baseUrl . '/storage/' . $path;
 
             return [
                 'id' => $index + 1,
@@ -72,7 +75,10 @@ class MediaController extends Controller
         
         // Store in public/media directory
         $path = $file->storeAs('media', $filename, 'public');
-        $url = url('/storage/' . $path);
+        
+        // Generate absolute URL using request's host for production compatibility
+        $baseUrl = $request->getSchemeAndHttpHost();
+        $url = $baseUrl . '/storage/' . $path;
 
         $media = [
             'id' => time(), // Using timestamp as temporary ID
